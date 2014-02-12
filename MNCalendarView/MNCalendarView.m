@@ -285,18 +285,26 @@
         }
     }
     
-    if (self.endDate && cell.enabled) {
-        if ([date isEqualToDate:self.endDate]) {
-            [cell setSelected:YES];
+    MNCalendarViewSelectingType type = MNCalendarViewSelectingTypeBeginDate;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(calendarViewCurrentSelection:)]) {
+        type = [self.delegate calendarViewCurrentSelection:self];
+    }
+    
+    if (type == MNCalendarViewSelectingTypeEndDate) {
+        if (self.endDate && cell.enabled) {
+            if ([date isEqualToDate:self.endDate]) {
+                [cell setSelected:YES];
+            }
+        }
+        
+        if (self.endDate && cell.enabled) {
+            if ([date compare:self.beginDate] == NSOrderedDescending &&
+                [date compare:self.endDate] == NSOrderedAscending) {
+                [cell setSelected:YES];
+            }
         }
     }
     
-    if (self.endDate && cell.enabled) {
-        if ([date compare:self.beginDate] == NSOrderedDescending &&
-            [date compare:self.endDate] == NSOrderedAscending) {
-            [cell setSelected:YES];
-        }
-    }
     
   
   return cell;
@@ -319,20 +327,21 @@
   if ([cell isKindOfClass:MNCalendarViewDayCell.class] && cell.enabled) {
     MNCalendarViewDayCell *dayCell = (MNCalendarViewDayCell *)cell;
     
-
       
-      if (!self.selectedBeginDate) {
+      MNCalendarViewSelectingType type = MNCalendarViewSelectingTypeBeginDate;
+      if (self.delegate && [self.delegate respondsToSelector:@selector(calendarViewCurrentSelection:)]) {
+          type = [self.delegate calendarViewCurrentSelection:self];
+      }
+
+      if (type == MNCalendarViewSelectingTypeBeginDate) {
           NSLog(@"begin");
           self.beginDate = dayCell.date;
-          self.endDate = nil;
-          self.selectedBeginDate = YES;
           if (self.delegate && [self.delegate respondsToSelector:@selector(calendarView:didSelectBeginDate:)]) {
               [self.delegate calendarView:self didSelectBeginDate:dayCell.date];
           }
       } else {
-                    NSLog(@"end");
+          NSLog(@"end");
           self.endDate = dayCell.date;
-          self.selectedBeginDate = NO;
           if (self.delegate && [self.delegate respondsToSelector:@selector(calendarView:didSelectEndDate:)]) {
               [self.delegate calendarView:self didSelectEndDate:dayCell.date];
           }

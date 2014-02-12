@@ -14,6 +14,11 @@
 #define MN_WEEK   MN_DAY * 7.f
 #define MN_YEAR   MN_DAY * 365.f
 
+typedef NS_ENUM(NSInteger, MNCalendarViewSelectingType) {
+    MNCalendarViewSelectingTypeBeginDate,
+    MNCalendarViewSelectingTypeEndDate
+};
+
 @protocol MNCalendarViewDelegate;
 
 @interface MNCalendarView : UIView <UICollectionViewDataSource, UICollectionViewDelegate>
@@ -28,7 +33,6 @@
 
 @property(nonatomic,copy)   NSDate     *beginDate;
 @property(nonatomic,copy)   NSDate     *endDate;
-@property(nonatomic,assign) BOOL selectedBeginDate;
 
 @property(nonatomic,strong) UIColor *separatorColor UI_APPEARANCE_SELECTOR; // default is the standard separator gray
 
@@ -46,6 +50,8 @@
 @optional
 
 - (BOOL)calendarView:(MNCalendarView *)calendarView shouldSelectDate:(NSDate *)date;
+- (MNCalendarViewSelectingType)calendarViewCurrentSelection:(MNCalendarView *)calendarView;
+
 - (void)calendarView:(MNCalendarView *)calendarView didSelectBeginDate:(NSDate *)date;
 - (void)calendarView:(MNCalendarView *)calendarView didSelectEndDate:(NSDate *)date;
 
