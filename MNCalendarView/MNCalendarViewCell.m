@@ -71,4 +71,9 @@ NSString *const MNCalendarViewCellIdentifier = @"MNCalendarViewCellIdentifier";
                     pixel);
 }
 
+- (void)setSelectedBackgroundColor:(UIColor *)selectedBackgroundColor
+{
+    self.selectedBackgroundView.backgroundColor = selectedBackgroundColor;
+}
+
 @end

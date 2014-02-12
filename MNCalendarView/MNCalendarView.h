@@ -25,7 +25,10 @@
 @property(nonatomic,strong) NSCalendar *calendar;
 @property(nonatomic,copy)   NSDate     *fromDate;
 @property(nonatomic,copy)   NSDate     *toDate;
-@property(nonatomic,copy)   NSDate     *selectedDate;
+
+@property(nonatomic,copy)   NSDate     *beginDate;
+@property(nonatomic,copy)   NSDate     *endDate;
+@property(nonatomic,assign) BOOL selectedBeginDate;
 
 @property(nonatomic,strong) UIColor *separatorColor UI_APPEARANCE_SELECTOR; // default is the standard separator gray
 
@@ -43,6 +46,7 @@
 @optional
 
 - (BOOL)calendarView:(MNCalendarView *)calendarView shouldSelectDate:(NSDate *)date;
-- (void)calendarView:(MNCalendarView *)calendarView didSelectDate:(NSDate *)date;
+- (void)calendarView:(MNCalendarView *)calendarView didSelectBeginDate:(NSDate *)date;
+- (void)calendarView:(MNCalendarView *)calendarView didSelectEndDate:(NSDate *)date;
 
 @end

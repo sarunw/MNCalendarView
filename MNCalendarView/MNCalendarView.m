@@ -101,8 +101,14 @@
   [self.monthFormatter setDateFormat:@"MMMM yyyy"];
 }
 
-- (void)setSelectedDate:(NSDate *)selectedDate {
-  _selectedDate = [selectedDate mn_beginningOfDay:self.calendar];
+- (void)setBeginDate:(NSDate *)beginDate
+{
+    _beginDate = [beginDate mn_beginningOfDay:self.calendar];
+}
+
+- (void)setEndDate:(NSDate *)endDate
+{
+    _endDate = [endDate mn_beginningOfDay:self.calendar];
 }
 
 - (void)reloadData {
@@ -177,6 +183,7 @@
 }
 
 - (BOOL)dateEnabled:(NSDate *)date {
+
   if (self.delegate && [self.delegate respondsToSelector:@selector(calendarView:shouldSelectDate:)]) {
     return [self.delegate calendarView:self shouldSelectDate:date];
   }
@@ -258,17 +265,39 @@
   components.day += day;
   
   NSDate *date = [self.calendar dateFromComponents:components];
+    
+    // this setDate will disable date not in this month
   [cell setDate:date
           month:monthDate
        calendar:self.calendar];
+    
+    BOOL alwaysDisabled = !cell.enabled;
   
   if (cell.enabled) {
     [cell setEnabled:[self dateEnabled:date]];
   }
 
-  if (self.selectedDate && cell.enabled) {
-    [cell setSelected:[date isEqualToDate:self.selectedDate]];
-  }
+    [cell setSelected:NO];
+    if (self.beginDate && !alwaysDisabled) {
+        if ([date isEqualToDate:self.beginDate]) {
+            [cell setSelected:YES];
+            
+        }
+    }
+    
+    if (self.endDate && cell.enabled) {
+        if ([date isEqualToDate:self.endDate]) {
+            [cell setSelected:YES];
+        }
+    }
+    
+    if (self.endDate && cell.enabled) {
+        if ([date compare:self.beginDate] == NSOrderedDescending &&
+            [date compare:self.endDate] == NSOrderedAscending) {
+            [cell setSelected:YES];
+        }
+    }
+    
   
   return cell;
 }
@@ -280,6 +309,7 @@
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"shoulf %d", [self canSelectItemAtIndexPath:indexPath]);
   return [self canSelectItemAtIndexPath:indexPath];
 }
 
@@ -289,11 +319,26 @@
   if ([cell isKindOfClass:MNCalendarViewDayCell.class] && cell.enabled) {
     MNCalendarViewDayCell *dayCell = (MNCalendarViewDayCell *)cell;
     
-    self.selectedDate = dayCell.date;
+
+      
+      if (!self.selectedBeginDate) {
+          NSLog(@"begin");
+          self.beginDate = dayCell.date;
+          self.endDate = nil;
+          self.selectedBeginDate = YES;
+          if (self.delegate && [self.delegate respondsToSelector:@selector(calendarView:didSelectBeginDate:)]) {
+              [self.delegate calendarView:self didSelectBeginDate:dayCell.date];
+          }
+      } else {
+                    NSLog(@"end");
+          self.endDate = dayCell.date;
+          self.selectedBeginDate = NO;
+          if (self.delegate && [self.delegate respondsToSelector:@selector(calendarView:didSelectEndDate:)]) {
+              [self.delegate calendarView:self didSelectEndDate:dayCell.date];
+          }
+      }
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(calendarView:didSelectDate:)]) {
-      [self.delegate calendarView:self didSelectDate:dayCell.date];
-    }
+
     
     [self.collectionView reloadData];
   }
