@@ -42,6 +42,7 @@ typedef NS_ENUM(NSInteger, MNCalendarViewSelectingType) {
 
 - (void)reloadData;
 - (void)registerUICollectionViewClasses; 
+- (void)scrollToDate:(NSDate *)date animated:(BOOL)animated;
 
 @end
 

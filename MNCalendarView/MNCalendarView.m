@@ -70,6 +70,11 @@
   return self;
 }
 
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+}
+
 - (UICollectionView *)collectionView {
   if (nil == _collectionView) {
     MNCalendarViewLayout *layout = [[MNCalendarViewLayout alloc] init];
@@ -129,6 +134,29 @@
   self.weekdaySymbols = formatter.shortWeekdaySymbols;
   
   [self.collectionView reloadData];
+}
+
+- (void)scrollToDate:(NSDate *)date animated:(BOOL)animated
+{
+    if (!date) {
+        return;
+    }
+    
+    NSDateComponents *components = [self.calendar components:NSCalendarUnitMonth fromDate:date];
+    NSDate *monthDate = self.monthDates[0];
+    NSDateComponents *firtSectionComponents = [self.calendar components:NSCalendarUnitMonth fromDate:monthDate];
+    NSInteger offset = components.month - firtSectionComponents.month;
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:offset];
+    
+    CGFloat offsetY = [self.collectionView layoutAttributesForSupplementaryElementOfKind:UICollectionElementKindSectionHeader atIndexPath:indexPath].frame.origin.y;
+    
+    CGFloat contentInsetY = self.collectionView.contentInset.top;
+    CGFloat sectionInsetY = ((UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout).sectionInset.top;
+    
+    [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, offsetY - contentInsetY - sectionInsetY) animated:animated];
+
+    
 }
 
 - (void)registerUICollectionViewClasses {
