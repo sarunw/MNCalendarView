@@ -38,6 +38,8 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
   
   self.weekday = components.weekday;
   self.titleLabel.text = [NSString stringWithFormat:@"%d", components.day];
+    self.titleLabel.userInteractionEnabled = YES; // TODO: hack to work
+    self.titleLabel.accessibilityLabel = [NSString stringWithFormat:@"%d/%d", components.day, components.month]; // TODO
   self.enabled = monthComponents.month == components.month;
   
   [self setNeedsDisplay];
