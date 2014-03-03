@@ -20,6 +20,36 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
 
 @implementation MNCalendarViewDayCell
 
+- (id)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        [self commonInit];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder: aDecoder];
+    if ( self ) {
+        [self commonInit];
+    }
+    
+    return self;
+}
+
+- (void)commonInit {
+    _textColor = UIColor.darkTextColor;
+    _disableTextColor =  [UIColor colorWithRed:.85f green:.85f blue:.85f alpha:1.f];//UIColor.lightGrayColor;
+    
+    _textBackgroundColor = UIColor.whiteColor;
+    _disableTextBackgroundColor = [UIColor colorWithRed:.96f green:.96f blue:.96f alpha:1.f];
+}
+
+- (void)setDisableTextColor:(UIColor *)disableTextColor
+{
+    NSLog(@"color %@", disableTextColor);
+    _disableTextColor = disableTextColor;
+}
+
 - (void)setDate:(NSDate *)date
           month:(NSDate *)month
        calendar:(NSCalendar *)calendar {
@@ -45,14 +75,28 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
   [self setNeedsDisplay];
 }
 
+- (void)setToday:(BOOL)today
+{
+    self.titleLabel.textColor = [UIColor redColor];
+    self.backgroundColor = [UIColor whiteColor];
+}
+
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
   
-  self.titleLabel.textColor =
-  self.enabled ? UIColor.darkTextColor : UIColor.lightGrayColor;
+        NSLog(@"inner color %@", self.disableTextColor);
+    self.titleLabel.textColor = self.enabled ? self.textColor : self.disableTextColor;
+//  self.enabled ? UIColor.darkTextColor : UIColor.lightGrayColor;
+//  self.enabled ? UIColor.darkTextColor : [UIColor colorWithRed:230/255.0f green:231/255.0f blue:232/255.0f alpha:1];
+//      self.enabled ? UIColor.darkTextColor :     [UIColor colorWithRed:.85f green:.85f blue:.85f alpha:1.f];
+//      self.enabled ? UIColor.darkTextColor : [UIColor colorWithRed:202/255.0f green:202/255.0f blue:202/255.0f alpha:1];
+//    self.enabled ? UIColor.darkTextColor : [UIColor colorWithRed:187/255.0f green:189/255.0f blue:192/255.0f alpha:1];
+
+
+    
   
   self.backgroundColor =
-  self.enabled ? UIColor.whiteColor : [UIColor colorWithRed:.96f green:.96f blue:.96f alpha:1.f];
+    self.enabled ? self.textBackgroundColor : self.disableTextBackgroundColor;
 }
 
 - (void)drawRect:(CGRect)rect {

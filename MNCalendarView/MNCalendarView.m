@@ -277,6 +277,7 @@
     cell.separatorColor = self.separatorColor;
     return cell;
   }
+    
   MNCalendarViewDayCell *cell =
     [collectionView dequeueReusableCellWithReuseIdentifier:MNCalendarViewDayCellIdentifier
                                               forIndexPath:indexPath];
@@ -294,7 +295,7 @@
   
   NSDate *date = [self.calendar dateFromComponents:components];
     
-    // this setDate will disable date not in this month
+  // this setDate will disable date not in this month
   [cell setDate:date
           month:monthDate
        calendar:self.calendar];
@@ -302,9 +303,17 @@
     BOOL alwaysDisabled = !cell.enabled;
   
   if (cell.enabled) {
-    [cell setEnabled:[self dateEnabled:date]];
+      // highligted today
+//      NSDate *today = [[NSDate date] mn_beginningOfDay:self.calendar];
+//      if (!alwaysDisabled && [date isEqualToDate:today]) {
+//          NSLog(@"today is %@", today);
+//          [cell setToday:YES];
+//      } else {
+          [cell setEnabled:[self dateEnabled:date]];
+//      }
   }
-
+    
+    
     [cell setSelected:NO];
     if (self.beginDate && !alwaysDisabled) {
         if ([date isEqualToDate:self.beginDate]) {
