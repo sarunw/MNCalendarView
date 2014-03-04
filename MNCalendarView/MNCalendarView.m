@@ -318,7 +318,6 @@
     if (self.beginDate && !alwaysDisabled) {
         if ([date isEqualToDate:self.beginDate]) {
             [cell setSelected:YES];
-            
         }
     }
     
