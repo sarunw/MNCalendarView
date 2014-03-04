@@ -35,6 +35,10 @@ typedef NS_ENUM(NSInteger, MNCalendarViewSelectingType) {
 @property(nonatomic,copy)   NSDate     *endDate;
 
 @property(nonatomic,strong) UIColor *separatorColor UI_APPEARANCE_SELECTOR; // default is the standard separator gray
+@property(nonatomic, strong) UIColor *calendarBackgroundColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *dateTextColor;
+@property (nonatomic, strong) UIColor *dateBackgroundColor;
+@property (nonatomic, strong) UIColor *disableDateTextColor;
 
 
 @property(nonatomic,strong) Class headerViewClass;

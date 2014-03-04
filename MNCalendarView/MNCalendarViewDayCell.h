@@ -15,10 +15,10 @@ extern NSString *const MNCalendarViewDayCellIdentifier;
 @property(nonatomic,strong,readonly) NSDate *date;
 @property(nonatomic,strong,readonly) NSDate *month;
 
-@property (nonatomic, strong) UIColor *textColor UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *textBackgroundColor UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *disableTextColor UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *disableTextBackgroundColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *textColor;
+@property (nonatomic, strong) UIColor *textBackgroundColor;
+@property (nonatomic, strong) UIColor *disableTextColor;
+@property (nonatomic, strong) UIColor *disableTextBackgroundColor;
 
 - (void)setDate:(NSDate *)date
           month:(NSDate *)month

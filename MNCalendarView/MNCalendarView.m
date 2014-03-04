@@ -48,6 +48,11 @@
   self.dayCellClass     = MNCalendarViewDayCell.class;
   
   _separatorColor = [UIColor colorWithRed:.85f green:.85f blue:.85f alpha:1.f];
+    _calendarBackgroundColor = [UIColor colorWithRed:.96f green:.96f blue:.96f alpha:1.f];
+    _disableDateTextColor = _separatorColor;
+    _dateBackgroundColor = [UIColor whiteColor];
+    _dateTextColor = [UIColor darkTextColor];
+    
   
   [self addSubview:self.collectionView];
   [self applyConstraints];
@@ -82,7 +87,7 @@
     _collectionView =
       [[UICollectionView alloc] initWithFrame:CGRectZero
                          collectionViewLayout:layout];
-    _collectionView.backgroundColor = [UIColor colorWithRed:.96f green:.96f blue:.96f alpha:1.f];
+      _collectionView.backgroundColor = self.calendarBackgroundColor;
     _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
     _collectionView.showsHorizontalScrollIndicator = NO;
     _collectionView.showsVerticalScrollIndicator = NO;
@@ -246,7 +251,7 @@
                                        withReuseIdentifier:MNCalendarHeaderViewIdentifier
                                               forIndexPath:indexPath];
 
-  headerView.backgroundColor = self.collectionView.backgroundColor;
+  headerView.backgroundColor = self.calendarBackgroundColor;
   headerView.titleLabel.text = [self.monthFormatter stringFromDate:self.monthDates[indexPath.section]];
 
   return headerView;
@@ -272,7 +277,7 @@
       [collectionView dequeueReusableCellWithReuseIdentifier:MNCalendarViewWeekdayCellIdentifier
                                                 forIndexPath:indexPath];
     
-    cell.backgroundColor = self.collectionView.backgroundColor;
+    cell.backgroundColor = self.calendarBackgroundColor;
     cell.titleLabel.text = self.weekdaySymbols[indexPath.item];
     cell.separatorColor = self.separatorColor;
     return cell;
@@ -282,6 +287,11 @@
     [collectionView dequeueReusableCellWithReuseIdentifier:MNCalendarViewDayCellIdentifier
                                               forIndexPath:indexPath];
   cell.separatorColor = self.separatorColor;
+    
+    cell.textColor = self.dateTextColor;
+    cell.textBackgroundColor = self.dateBackgroundColor;
+    cell.disableTextColor = self.disableDateTextColor;
+    cell.disableTextBackgroundColor = self.calendarBackgroundColor;
   
   NSDate *monthDate = self.monthDates[indexPath.section];
   NSDate *firstDateInMonth = [self firstVisibleDateOfMonth:monthDate];
