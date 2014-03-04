@@ -363,7 +363,6 @@
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"shoulf %d", [self canSelectItemAtIndexPath:indexPath]);
   return [self canSelectItemAtIndexPath:indexPath];
 }
 
@@ -380,13 +379,11 @@
       }
 
       if (type == MNCalendarViewSelectingTypeBeginDate) {
-          NSLog(@"begin");
           self.beginDate = dayCell.date;
           if (self.delegate && [self.delegate respondsToSelector:@selector(calendarView:didSelectBeginDate:)]) {
               [self.delegate calendarView:self didSelectBeginDate:dayCell.date];
           }
       } else {
-          NSLog(@"end");
           self.endDate = dayCell.date;
           if (self.delegate && [self.delegate respondsToSelector:@selector(calendarView:didSelectEndDate:)]) {
               [self.delegate calendarView:self didSelectEndDate:dayCell.date];

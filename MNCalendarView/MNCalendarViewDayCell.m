@@ -44,12 +44,6 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
     _disableTextBackgroundColor = [UIColor colorWithRed:.96f green:.96f blue:.96f alpha:1.f];
 }
 
-- (void)setDisableTextColor:(UIColor *)disableTextColor
-{
-    NSLog(@"color %@", disableTextColor);
-    _disableTextColor = disableTextColor;
-}
-
 - (void)setDate:(NSDate *)date
           month:(NSDate *)month
        calendar:(NSCalendar *)calendar {
@@ -84,7 +78,6 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
   
-        NSLog(@"inner color %@", self.disableTextColor);
     self.titleLabel.textColor = self.enabled ? self.textColor : self.disableTextColor;
 //  self.enabled ? UIColor.darkTextColor : UIColor.lightGrayColor;
 //  self.enabled ? UIColor.darkTextColor : [UIColor colorWithRed:230/255.0f green:231/255.0f blue:232/255.0f alpha:1];
