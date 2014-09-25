@@ -146,13 +146,23 @@
     if (!date) {
         return;
     }
+    // User date
+    NSDateComponents *components = [self.calendar components:NSCalendarUnitMonth|NSCalendarUnitYear fromDate:date];
     
-    NSDateComponents *components = [self.calendar components:NSCalendarUnitMonth fromDate:date];
+    // First month
     NSDate *monthDate = self.monthDates[0];
-    NSDateComponents *firtSectionComponents = [self.calendar components:NSCalendarUnitMonth fromDate:monthDate];
-    NSInteger offset = components.month - firtSectionComponents.month;
+    NSDateComponents *firtSectionComponents = [self.calendar components:NSCalendarUnitMonth|NSCalendarUnitYear fromDate:monthDate];
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:offset];
+    NSInteger offsetMonth = components.month - firtSectionComponents.month;
+    NSInteger offsetYear = components.year - firtSectionComponents.year;
+    if (offsetYear > 0) {
+        // next year
+        
+        // this year months + year between + selected month
+        offsetMonth = (12 - firtSectionComponents.month) + (offsetYear - 1) * 12 + components.month;
+    }
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:offsetMonth];
     
     CGFloat offsetY = [self.collectionView layoutAttributesForSupplementaryElementOfKind:UICollectionElementKindSectionHeader atIndexPath:indexPath].frame.origin.y;
     
@@ -160,8 +170,6 @@
     CGFloat sectionInsetY = ((UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout).sectionInset.top;
     
     [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, offsetY - contentInsetY - sectionInsetY) animated:animated];
-
-    
 }
 
 - (void)registerUICollectionViewClasses {
