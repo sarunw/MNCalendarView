@@ -20,5 +20,6 @@ CG_EXTERN void MNContextDrawLine(CGContextRef c, CGPoint start, CGPoint end, CGC
 @property(nonatomic,strong) UIColor *selectedBackgroundColor UI_APPEARANCE_SELECTOR;
 
 @property(nonatomic,strong,readonly) UILabel *titleLabel;
+@property (nonatomic, strong) UIFont *titleFont UI_APPEARANCE_SELECTOR;
 
 @end

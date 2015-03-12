@@ -41,4 +41,12 @@ NSString *const MNCalendarHeaderViewIdentifier = @"MNCalendarHeaderViewIdentifie
   self.titleLabel.text = [dateFormatter stringFromDate:self.date];
 }
 
+
+#pragma mark - UI_APPEARANCE_SELECTOR
+
+- (void)setTitleFont:(UIFont *)titleFont {
+    self.titleLabel.font = titleFont;
+}
+
+
 @end

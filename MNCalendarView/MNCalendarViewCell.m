@@ -37,7 +37,8 @@ NSString *const MNCalendarViewCellIdentifier = @"MNCalendarViewCellIdentifier";
     self.titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.titleLabel.font = [UIFont systemFontOfSize:14.f];
     self.titleLabel.textColor = [UIColor darkTextColor];
-    self.titleLabel.highlightedTextColor = [UIColor whiteColor];
+//    self.titleLabel.highlightedTextColor = [UIColor whiteColor];
+      self.titleLabel.highlightedTextColor = self.selectedBackgroundColor ?: [UIColor darkTextColor];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.userInteractionEnabled = NO;
     self.titleLabel.backgroundColor = [UIColor clearColor];
@@ -47,6 +48,8 @@ NSString *const MNCalendarViewCellIdentifier = @"MNCalendarViewCellIdentifier";
     self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.bounds];
     self.selectedBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:0.23f green:0.61f blue:1.f alpha:1.f];
+      self.selectedBackgroundView.backgroundColor = [UIColor clearColor];
+      
   }
   return self;
 }
@@ -57,6 +60,11 @@ NSString *const MNCalendarViewCellIdentifier = @"MNCalendarViewCellIdentifier";
   self.contentView.frame = self.bounds;
   self.selectedBackgroundView.frame = self.bounds;
 }
+
+- (void)setSelected:(BOOL)selected {
+    [super setSelected:selected];
+}
+
 
 - (void)drawRect:(CGRect)rect {
   CGContextRef context = UIGraphicsGetCurrentContext();
@@ -71,9 +79,17 @@ NSString *const MNCalendarViewCellIdentifier = @"MNCalendarViewCellIdentifier";
                     pixel);
 }
 
+#pragma mark - UI_APPEARANCE_SELECTOR
+
 - (void)setSelectedBackgroundColor:(UIColor *)selectedBackgroundColor
 {
-    self.selectedBackgroundView.backgroundColor = selectedBackgroundColor;
+    _selectedBackgroundColor = selectedBackgroundColor;
+    
+    self.titleLabel.highlightedTextColor = selectedBackgroundColor;
+}
+
+- (void)setTitleFont:(UIFont *)titleFont {
+    self.titleLabel.font = titleFont;
 }
 
 @end

@@ -109,6 +109,17 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
                       separatorColor,
                       pixel);
   }
+    
+    if (self.selected) {
+        [self.selectedBackgroundColor setStroke];
+        CGContextSetLineWidth(context, 2);
+        CGContextStrokeEllipseInRect(context, [self circleFrame]);
+    }
+}
+
+- (CGRect)circleFrame {
+    CGRect rect = self.bounds;
+    return CGRectInset(rect, 5, 5);
 }
 
 @end

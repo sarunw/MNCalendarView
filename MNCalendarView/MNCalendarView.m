@@ -325,6 +325,7 @@
     
     
     [cell setSelected:NO];
+    [cell setHighlighted:NO];
     if (self.beginDate && !alwaysDisabled) {
         if ([date isEqualToDate:self.beginDate]) {
             [cell setSelected:YES];
@@ -346,7 +347,7 @@
         if (self.endDate && cell.enabled) {
             if ([date compare:self.beginDate] == NSOrderedDescending &&
                 [date compare:self.endDate] == NSOrderedAscending) {
-                [cell setSelected:YES];
+                [cell setHighlighted:YES];
             }
         }
     }

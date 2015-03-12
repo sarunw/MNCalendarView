@@ -14,5 +14,6 @@ extern NSString *const MNCalendarHeaderViewIdentifier;
 
 @property(nonatomic,strong,readonly) UILabel *titleLabel;
 @property(nonatomic,strong) NSDate *date;
+@property (nonatomic, strong) UIFont *titleFont UI_APPEARANCE_SELECTOR;
 
 @end
