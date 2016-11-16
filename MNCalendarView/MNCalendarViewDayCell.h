@@ -23,5 +23,6 @@ extern NSString *const MNCalendarViewDayCellIdentifier;
 - (void)setDate:(NSDate *)date
           month:(NSDate *)month
        calendar:(NSCalendar *)calendar;
+- (void)setToday:(BOOL)today;
 
 @end
