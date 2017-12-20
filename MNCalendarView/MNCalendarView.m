@@ -312,7 +312,6 @@
     components.day += day;
     
     NSDate *date = [self.calendar dateFromComponents:components];
-    NSDate *today = [[NSDate date] mn_beginningOfDay:self.calendar];
     
     // this setDate will disable date not in this month
     [cell setDate:date
