@@ -326,9 +326,9 @@
         NSDate *today = [[NSDate date] mn_beginningOfDay:self.calendar];
         if (!alwaysDisabled && [date isEqualToDate:today]) {
             [cell setToday:YES];
-        } else {
-            [cell setEnabled:[self dateEnabled:date]];
         }
+        
+        [cell setEnabled:[self dateEnabled:date]];
     }
     
     [cell setSelected:NO];
