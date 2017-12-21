@@ -318,13 +318,12 @@
             month:monthDate
          calendar:self.calendar];
     
-    BOOL alwaysDisabled = !cell.enabled;
     [cell setToday:NO];
     
     if (cell.enabled) {
         // highligted today
         NSDate *today = [[NSDate date] mn_beginningOfDay:self.calendar];
-        if (!alwaysDisabled && [date isEqualToDate:today]) {
+        if (cell.enabled && [date isEqualToDate:today]) {
             [cell setToday:YES];
         }
         
@@ -333,7 +332,7 @@
     
     [cell setSelected:NO];
     [cell setHighlighted:NO];
-    if (self.beginDate && !alwaysDisabled) {
+    if (self.beginDate && cell.enabled) {
         if ([date isEqualToDate:self.beginDate]) {
             [cell setSelected:YES];
         }
@@ -397,8 +396,6 @@
             }
         }
         
-        
-        
         [self.collectionView reloadData];
     }
 }
@@ -421,3 +418,4 @@
 }
 
 @end
+
