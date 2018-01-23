@@ -312,29 +312,29 @@
     components.day += day;
     
     NSDate *date = [self.calendar dateFromComponents:components];
-    NSDate *today = [[NSDate date] mn_beginningOfDay:self.calendar];
     
     // this setDate will disable date not in this month
     [cell setDate:date
             month:monthDate
          calendar:self.calendar];
     
-    BOOL alwaysDisabled = !cell.enabled;
     [cell setToday:NO];
     
-    if (cell.enabled) {
+    BOOL isEnable = cell.enabled;
+    
+    if (isEnable) {
         // highligted today
         NSDate *today = [[NSDate date] mn_beginningOfDay:self.calendar];
-        if (!alwaysDisabled && [date isEqualToDate:today]) {
+        if (isEnable && [date isEqualToDate:today]) {
             [cell setToday:YES];
-        } else {
-            [cell setEnabled:[self dateEnabled:date]];
         }
+        
+        [cell setEnabled:[self dateEnabled:date]];
     }
     
     [cell setSelected:NO];
     [cell setHighlighted:NO];
-    if (self.beginDate && !alwaysDisabled) {
+    if (self.beginDate && isEnable) {
         if ([date isEqualToDate:self.beginDate]) {
             [cell setSelected:YES];
         }
@@ -359,9 +359,7 @@
             }
         }
     }
-    
-    
-    
+
     return cell;
 }
 
@@ -398,8 +396,6 @@
             }
         }
         
-        
-        
         [self.collectionView reloadData];
     }
 }
@@ -422,3 +418,4 @@
 }
 
 @end
+
