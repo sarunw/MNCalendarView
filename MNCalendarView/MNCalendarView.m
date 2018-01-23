@@ -320,10 +320,12 @@
     
     [cell setToday:NO];
     
-    if (cell.enabled) {
+    BOOL isEnable = cell.enabled;
+    
+    if (isEnable) {
         // highligted today
         NSDate *today = [[NSDate date] mn_beginningOfDay:self.calendar];
-        if (cell.enabled && [date isEqualToDate:today]) {
+        if (isEnable && [date isEqualToDate:today]) {
             [cell setToday:YES];
         }
         
@@ -332,7 +334,7 @@
     
     [cell setSelected:NO];
     [cell setHighlighted:NO];
-    if (self.beginDate && cell.enabled) {
+    if (self.beginDate && isEnable) {
         if ([date isEqualToDate:self.beginDate]) {
             [cell setSelected:YES];
         }
