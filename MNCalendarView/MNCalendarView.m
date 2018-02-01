@@ -24,6 +24,7 @@
 @property(nonatomic,assign,readwrite) NSUInteger daysInWeek;
 
 @property(nonatomic,strong,readwrite) NSDateFormatter *monthFormatter;
+@property(nonatomic,strong,readonly) NSDateFormatter *accessibilityDateFormatter;
 
 - (NSDate *)firstVisibleDateOfMonth:(NSDate *)date;
 - (NSDate *)lastVisibleDateOfMonth:(NSDate *)date;
@@ -53,10 +54,18 @@
     _dateBackgroundColor = [UIColor whiteColor];
     _dateTextColor = [UIColor darkTextColor];
     
+    _accessibilityDateFormatter = [self iso8601DateFormatter];
     
     [self addSubview:self.collectionView];
     [self applyConstraints];
     [self reloadData];
+}
+
+- (NSDateFormatter *)iso8601DateFormatter {
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]];
+    return dateFormatter;
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -318,6 +327,8 @@
             month:monthDate
          calendar:self.calendar];
     
+    [cell.titleLabel setAccessibilityIdentifier:[_accessibilityDateFormatter stringFromDate:date]];
+
     [cell setToday:NO];
     
     BOOL isEnable = cell.enabled;

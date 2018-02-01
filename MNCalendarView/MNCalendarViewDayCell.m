@@ -61,7 +61,6 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
     self.titleLabel.text = [NSString stringWithFormat:@"%d", components.day];
     self.titleLabel.userInteractionEnabled = YES; // TODO: hack to work
     self.titleLabel.accessibilityLabel = [NSString stringWithFormat:@"%d/%d", components.day, components.month]; // TODO
-    self.titleLabel.accessibilityIdentifier = [self iso8601withoutTimeStringFromDate:date];
     self.enabled = monthComponents.month == components.month;
     
     [self setNeedsDisplay];
@@ -129,13 +128,6 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
 - (CGRect)circleFrame {
     CGRect rect = self.bounds;
     return CGRectInset(rect, 5, 5);
-}
-
-- (NSString *)iso8601withoutTimeStringFromDate:(NSDate *)date {
-    NSDateFormatter *dateformatter = [NSDateFormatter new];
-    [dateformatter setDateFormat:@"yyyy-MM-dd"];
-    [dateformatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]];
-    return [dateformatter stringFromDate:date];
 }
 
 @end
