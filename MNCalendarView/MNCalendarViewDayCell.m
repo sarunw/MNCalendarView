@@ -45,26 +45,23 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
     _disableTextBackgroundColor = [UIColor colorWithRed:.96f green:.96f blue:.96f alpha:1.f];
 }
 
-- (void)setDate:(NSDate *)date
-          month:(NSDate *)month
-       calendar:(NSCalendar *)calendar {
+- (void)setDate:(NSDate *)date month:(NSDate *)month calendar:(NSCalendar *)calendar {
     
     self.date     = date;
     self.month    = month;
     self.calendar = calendar;
     
-    NSDateComponents *components =
-    [self.calendar components:NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit
-                     fromDate:self.date];
+    NSDateComponents *components = [self.calendar components:NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit
+                                                    fromDate:self.date];
     
-    NSDateComponents *monthComponents =
-    [self.calendar components:NSMonthCalendarUnit
-                     fromDate:self.month];
+    NSDateComponents *monthComponents = [self.calendar components:NSMonthCalendarUnit
+                                                         fromDate:self.month];
     
     self.weekday = components.weekday;
     self.titleLabel.text = [NSString stringWithFormat:@"%d", components.day];
     self.titleLabel.userInteractionEnabled = YES; // TODO: hack to work
     self.titleLabel.accessibilityLabel = [NSString stringWithFormat:@"%d/%d", components.day, components.month]; // TODO
+    self.titleLabel.accessibilityIdentifier = [self iso8601withoutTimeStringFromDate:date];
     self.enabled = monthComponents.month == components.month;
     
     [self setNeedsDisplay];
@@ -132,6 +129,13 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
 - (CGRect)circleFrame {
     CGRect rect = self.bounds;
     return CGRectInset(rect, 5, 5);
+}
+
+- (NSString *)iso8601withoutTimeStringFromDate:(NSDate *)date {
+    NSDateFormatter *dateformatter = [NSDateFormatter new];
+    [dateformatter setDateFormat:@"yyyy-MM-dd"];
+    [dateformatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]];
+    return [dateformatter stringFromDate:date];
 }
 
 @end
