@@ -24,7 +24,7 @@
 @property(nonatomic,assign,readwrite) NSUInteger daysInWeek;
 
 @property(nonatomic,strong,readwrite) NSDateFormatter *monthFormatter;
-@property(nonatomic,strong,readonly) NSDateFormatter *accessibilityDateFormatter;
+@property(nonatomic,strong) NSDateFormatter *accessibilityDateFormatter;
 
 - (NSDate *)firstVisibleDateOfMonth:(NSDate *)date;
 - (NSDate *)lastVisibleDateOfMonth:(NSDate *)date;
