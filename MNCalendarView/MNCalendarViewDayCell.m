@@ -45,17 +45,21 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
     _disableTextBackgroundColor = [UIColor colorWithRed:.96f green:.96f blue:.96f alpha:1.f];
 }
 
-- (void)setDate:(NSDate *)date month:(NSDate *)month calendar:(NSCalendar *)calendar {
+- (void)setDate:(NSDate *)date
+          month:(NSDate *)month
+       calendar:(NSCalendar *)calendar {
     
     self.date     = date;
     self.month    = month;
     self.calendar = calendar;
     
-    NSDateComponents *components = [self.calendar components:NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit
-                                                    fromDate:self.date];
+    NSDateComponents *components =
+    [self.calendar components:NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit
+                     fromDate:self.date];
     
-    NSDateComponents *monthComponents = [self.calendar components:NSMonthCalendarUnit
-                                                         fromDate:self.month];
+    NSDateComponents *monthComponents =
+    [self.calendar components:NSMonthCalendarUnit
+                     fromDate:self.month];
     
     self.weekday = components.weekday;
     self.titleLabel.text = [NSString stringWithFormat:@"%d", components.day];
