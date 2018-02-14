@@ -327,8 +327,6 @@
             month:monthDate
          calendar:self.calendar];
     
-    [cell.titleLabel setAccessibilityIdentifier:[_accessibilityDateFormatter stringFromDate:date]];
-
     [cell setToday:NO];
     
     BOOL isEnable = cell.enabled;
@@ -339,7 +337,7 @@
         if (isEnable && [date isEqualToDate:today]) {
             [cell setToday:YES];
         }
-        
+        [cell.titleLabel setAccessibilityIdentifier:[_accessibilityDateFormatter stringFromDate:date]];
         [cell setEnabled:[self dateEnabled:date]];
     }
     
