@@ -331,8 +331,8 @@
     
     BOOL isEnable = cell.enabled;
     
-    NSString *dateAccessibilityIdentifier = isEnable ? [_accessibilityDateFormatter stringFromDate:date] : nil;
-    
+    [cell.titleLabel setAccessibilityIdentifier:isEnable ? [_accessibilityDateFormatter stringFromDate:date] : nil];
+
     if (isEnable) {
         // highligted today
         NSDate *today = [[NSDate date] mn_beginningOfDay:self.calendar];
@@ -340,7 +340,6 @@
             [cell setToday:YES];
         }
         [cell setEnabled:[self dateEnabled:date]];
-        [cell.titleLabel setAccessibilityIdentifier:dateAccessibilityIdentifier];
     }
     
     [cell setSelected:NO];
@@ -350,6 +349,8 @@
             [cell setSelected:YES];
         }
     }
+    
+    
     
     MNCalendarViewSelectingType type = MNCalendarViewSelectingTypeBeginDate;
     if (self.delegate && [self.delegate respondsToSelector:@selector(calendarViewCurrentSelection:)]) {
