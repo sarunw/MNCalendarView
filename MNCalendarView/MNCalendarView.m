@@ -340,7 +340,7 @@
             [cell setToday:YES];
         }
         [cell setEnabled:[self dateEnabled:date]];
-        [cell setAccessibilityIdentifier:dateAccessibilityIdentifier];
+        [cell.titleLabel setAccessibilityIdentifier:dateAccessibilityIdentifier];
     }
     
     [cell setSelected:NO];
