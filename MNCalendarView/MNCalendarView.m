@@ -350,8 +350,6 @@
         }
     }
     
-    
-    
     MNCalendarViewSelectingType type = MNCalendarViewSelectingTypeBeginDate;
     if (self.delegate && [self.delegate respondsToSelector:@selector(calendarViewCurrentSelection:)]) {
         type = [self.delegate calendarViewCurrentSelection:self];
