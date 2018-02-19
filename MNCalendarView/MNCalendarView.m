@@ -339,6 +339,8 @@
         }
         [cell.titleLabel setAccessibilityIdentifier:[_accessibilityDateFormatter stringFromDate:date]];
         [cell setEnabled:[self dateEnabled:date]];
+    } else {
+        [cell.titleLabel setAccessibilityIdentifier:nil];
     }
     
     [cell setSelected:NO];
