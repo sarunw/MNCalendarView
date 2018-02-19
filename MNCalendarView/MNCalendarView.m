@@ -331,13 +331,14 @@
     
     BOOL isEnable = cell.enabled;
     
+    [cell.titleLabel setAccessibilityIdentifier:isEnable ? [_accessibilityDateFormatter stringFromDate:date] : nil];
+
     if (isEnable) {
         // highligted today
         NSDate *today = [[NSDate date] mn_beginningOfDay:self.calendar];
         if (isEnable && [date isEqualToDate:today]) {
             [cell setToday:YES];
         }
-        [cell.titleLabel setAccessibilityIdentifier:[_accessibilityDateFormatter stringFromDate:date]];
         [cell setEnabled:[self dateEnabled:date]];
     }
     
