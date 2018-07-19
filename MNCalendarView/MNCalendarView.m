@@ -234,8 +234,8 @@
 
 - (BOOL)dateEnabled:(NSDate *)date {
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(calendarView:shouldSelectDate:)]) {
-        return [self.delegate calendarView:self shouldSelectDate:date];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(calendarView:dateAvailable:)]) {
+        return [self.delegate calendarView:self dateAvailable:date];
     }
     return YES;
 }
@@ -350,23 +350,16 @@
         }
     }
     
-    MNCalendarViewSelectingType type = MNCalendarViewSelectingTypeBeginDate;
-    if (self.delegate && [self.delegate respondsToSelector:@selector(calendarViewCurrentSelection:)]) {
-        type = [self.delegate calendarViewCurrentSelection:self];
+    if (self.endDate && cell.enabled) {
+        if ([date isEqualToDate:self.endDate]) {
+            [cell setSelected:YES];
+        }
     }
     
-    if (type == MNCalendarViewSelectingTypeEndDate) {
-        if (self.endDate && cell.enabled) {
-            if ([date isEqualToDate:self.endDate]) {
-                [cell setSelected:YES];
-            }
-        }
-        
-        if (self.endDate && cell.enabled) {
-            if ([date compare:self.beginDate] == NSOrderedDescending &&
-                [date compare:self.endDate] == NSOrderedAscending) {
-                [cell setHighlighted:YES];
-            }
+    if (self.endDate && cell.enabled) {
+        if ([date compare:self.beginDate] == NSOrderedDescending &&
+            [date compare:self.endDate] == NSOrderedAscending) {
+            [cell setHighlighted:YES];
         }
     }
 
@@ -380,7 +373,17 @@
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return [self canSelectItemAtIndexPath:indexPath];
+    if ([self canSelectItemAtIndexPath:indexPath]) {
+        MNCalendarViewCell *cell = (MNCalendarViewCell *)[self collectionView:collectionView cellForItemAtIndexPath:indexPath];
+        if ([cell isKindOfClass:MNCalendarViewDayCell.class] && cell.enabled) {
+            MNCalendarViewDayCell *dayCell = (MNCalendarViewDayCell *)cell;
+            return [self.delegate calendarView:self shouldSelectDate:dayCell.date];
+        } else {
+            return NO;
+        }
+    } else {
+        return NO;
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -396,17 +399,21 @@
         
         if (type == MNCalendarViewSelectingTypeBeginDate) {
             self.beginDate = dayCell.date;
+        } else {
+            self.endDate = dayCell.date;
+        }
+        
+        [self.collectionView reloadData];
+    
+        if (type == MNCalendarViewSelectingTypeBeginDate) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(calendarView:didSelectBeginDate:)]) {
                 [self.delegate calendarView:self didSelectBeginDate:dayCell.date];
             }
         } else {
-            self.endDate = dayCell.date;
             if (self.delegate && [self.delegate respondsToSelector:@selector(calendarView:didSelectEndDate:)]) {
                 [self.delegate calendarView:self didSelectEndDate:dayCell.date];
             }
         }
-        
-        [self.collectionView reloadData];
     }
 }
 

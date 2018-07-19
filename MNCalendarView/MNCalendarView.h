@@ -55,9 +55,10 @@ typedef NS_ENUM(NSInteger, MNCalendarViewSelectingType) {
 
 @optional
 
-- (BOOL)calendarView:(MNCalendarView *)calendarView shouldSelectDate:(NSDate *)date;
 - (MNCalendarViewSelectingType)calendarViewCurrentSelection:(MNCalendarView *)calendarView;
 
+- (BOOL)calendarView:(MNCalendarView *)calendarView dateAvailable:(NSDate *)date;
+- (BOOL)calendarView:(MNCalendarView *)calendarView shouldSelectDate:(NSDate *)date;
 - (void)calendarView:(MNCalendarView *)calendarView didSelectBeginDate:(NSDate *)date;
 - (void)calendarView:(MNCalendarView *)calendarView didSelectEndDate:(NSDate *)date;
 
