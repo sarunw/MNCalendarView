@@ -153,7 +153,7 @@
 - (NSInteger)sectionForDate:(NSDate *)date
 {
     if (!date) {
-        return;
+        return nil;
     }
     // User date
     NSDateComponents *components = [self.calendar components:NSCalendarUnitMonth|NSCalendarUnitYear fromDate:date];
