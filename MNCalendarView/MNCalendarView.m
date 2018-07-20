@@ -150,7 +150,7 @@
     [self.collectionView reloadData];
 }
 
-- (void)scrollToDate:(NSDate *)date animated:(BOOL)animated
+- (NSInteger)sectionForDate:(NSDate *)date
 {
     if (!date) {
         return;
@@ -171,6 +171,17 @@
         offsetMonth = (12 - firtSectionComponents.month) + (offsetYear - 1) * 12 + components.month;
     }
     
+    return offsetMonth;
+}
+
+- (void)scrollToDate:(NSDate *)date animated:(BOOL)animated
+{
+    NSInteger offsetMonth = [self sectionForDate:date];
+    
+    if (!offsetMonth) {
+        return;
+    }
+   
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:offsetMonth];
     
     CGFloat offsetY = [self.collectionView layoutAttributesForSupplementaryElementOfKind:UICollectionElementKindSectionHeader atIndexPath:indexPath].frame.origin.y;
