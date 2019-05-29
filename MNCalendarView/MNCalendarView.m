@@ -117,7 +117,7 @@
     
     self.monthFormatter = [[NSDateFormatter alloc] init];
     self.monthFormatter.calendar = calendar;
-    [self.monthFormatter setLocalizedDateFormatFromTemplate:@"MMMM yyyy"];
+    [self.monthFormatter setLocalizedDateFormatFromTemplate:@"MMM yyyy"];
 }
 
 - (void)setBeginDate:(NSDate *)beginDate
