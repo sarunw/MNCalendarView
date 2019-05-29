@@ -36,7 +36,7 @@ NSString *const MNCalendarHeaderViewIdentifier = @"MNCalendarHeaderViewIdentifie
 
   NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 
-  [dateFormatter setDateFormat:@"MMMM yyyy"];
+  [dateFormatter setLocalizedDateFormatFromTemplate:@"MMMM yyyy"];
 
   self.titleLabel.text = [dateFormatter stringFromDate:self.date];
 }
