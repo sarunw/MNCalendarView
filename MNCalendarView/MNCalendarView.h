@@ -34,6 +34,16 @@ typedef NS_ENUM(NSInteger, MNCalendarViewSelectingType) {
 @property(nonatomic,copy)   NSDate     *beginDate;
 @property(nonatomic,copy)   NSDate     *endDate;
 
+/**
+ This date format is applied for each date. Default is yyyy-MM-dd.
+ */
+@property(nonatomic,copy)   NSString   *dateFormat;
+/**
+ This date format is applied for each month. Default is yyyy-MM.
+ */
+@property(nonatomic,copy)   NSString   *monthFormat;
+
+
 @property(nonatomic,strong) UIColor *separatorColor UI_APPEARANCE_SELECTOR; // default is the standard separator gray
 @property(nonatomic, strong) UIColor *calendarBackgroundColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) UIColor *dateTextColor;
