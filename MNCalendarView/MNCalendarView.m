@@ -47,6 +47,9 @@
     self.headerViewClass  = MNCalendarHeaderView.class;
     self.weekdayCellClass = MNCalendarViewWeekdayCell.class;
     self.dayCellClass     = MNCalendarViewDayCell.class;
+
+    self.dateFormat = @"yyyy-MM-dd";
+    self.monthFormat = @"yyyy-MM";
     
     _separatorColor = [UIColor colorWithRed:.85f green:.85f blue:.85f alpha:1.f];
     _calendarBackgroundColor = [UIColor colorWithRed:.96f green:.96f blue:.96f alpha:1.f];
@@ -63,7 +66,7 @@
 
 - (NSDateFormatter *)iso8601DateFormatter {
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    [dateFormatter setDateFormat:_dateFormat];
     [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]];
     return dateFormatter;
 }
@@ -118,7 +121,7 @@
     self.monthFormatter = [[NSDateFormatter alloc] init];
     self.monthFormatter.calendar = calendar;
     self.monthFormatter.locale = calendar.locale;
-    [self.monthFormatter setLocalizedDateFormatFromTemplate:@"MMMM yyyy"];
+    [self.monthFormatter setLocalizedDateFormatFromTemplate:_monthFormat];
 }
 
 - (void)setBeginDate:(NSDate *)beginDate
