@@ -134,6 +134,14 @@
     _endDate = [endDate mn_beginningOfDay:self.calendar];
 }
 
+- (void)setMonthFormat:(NSString *)monthFormat {
+    _monthFormat = monthFormat;
+    self.monthFormatter = [[NSDateFormatter alloc] init];
+    self.monthFormatter.calendar = _calendar;
+    self.monthFormatter.locale = _calendar.locale;
+    self.monthFormatter.dateFormat = monthFormat;
+}
+
 - (void)reloadData {
     NSMutableArray *monthDates = @[].mutableCopy;
     MNFastDateEnumeration *enumeration =
