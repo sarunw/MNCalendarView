@@ -34,6 +34,8 @@ typedef NS_ENUM(NSInteger, MNCalendarViewSelectingType) {
 @property(nonatomic,copy)   NSDate     *beginDate;
 @property(nonatomic,copy)   NSDate     *endDate;
 
+@property(nonatomic,copy)   NSString   *accessibilityDomain;
+
 /**
  This date format is applied for each date. Default is yyyy-MM-dd.
  */

@@ -50,6 +50,7 @@
 
     self.dateFormat = @"yyyy-MM-dd";
     self.monthFormat = @"yyyy-MM";
+    self.accessibilityDomain = @"booking.calendar";
     
     _separatorColor = [UIColor colorWithRed:.85f green:.85f blue:.85f alpha:1.f];
     _calendarBackgroundColor = [UIColor colorWithRed:.96f green:.96f blue:.96f alpha:1.f];
@@ -355,6 +356,12 @@
     BOOL isEnable = cell.enabled;
     
     [cell.titleLabel setAccessibilityIdentifier:isEnable ? [_accessibilityDateFormatter stringFromDate:date] : nil];
+
+    NSString *identifier = [NSString stringWithFormat:@"%@.%@",
+                            _accessibilityDomain,
+                            [_accessibilityDateFormatter stringFromDate:date]];
+    [cell setAccessibilityIdentifier:identifier];
+    [cell setAccessibilityLabel:identifier];
 
     if (isEnable) {
         // highligted today
