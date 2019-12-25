@@ -96,10 +96,11 @@
 - (UICollectionView *)collectionView {
     if (nil == _collectionView) {
         MNCalendarViewLayout *layout = [[MNCalendarViewLayout alloc] init];
-        
         _collectionView =
         [[UICollectionView alloc] initWithFrame:CGRectZero
                            collectionViewLayout:layout];
+        _collectionView.accessibilityIdentifier = [NSString stringWithFormat:@"%@.%@", _accessibilityDomain, @"collection_view"];
+        _collectionView.accessibilityLabel = [NSString stringWithFormat:@"%@.%@", _accessibilityDomain, @"collection_view"];
         _collectionView.backgroundColor = self.calendarBackgroundColor;
         _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
         _collectionView.showsHorizontalScrollIndicator = NO;
